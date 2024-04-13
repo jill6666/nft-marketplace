@@ -17,8 +17,8 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 
 const config = getDefaultConfig({
-  appName: 'RainbowKit App',
-  projectId: 'YOUR_PROJECT_ID',
+  appName: 'OpenMeme',
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID || '',
   chains: [
     mainnet,
     polygon,
