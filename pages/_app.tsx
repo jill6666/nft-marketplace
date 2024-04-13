@@ -1,40 +1,11 @@
-import '../styles/globals.css';
+import '@styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
-import { arbitrum, base, mainnet, optimism, polygon, sepolia } from 'wagmi/chains';
-import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import {
-  phantomWallet,
-  coinbaseWallet,
-  metaMaskWallet,
-  rainbowWallet,
-  okxWallet,
-  trustWallet,
-  uniswapWallet,
-} from '@rainbow-me/rainbowkit/wallets';
-
-const config = getDefaultConfig({
-  appName: 'OpenMeme',
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID || '',
-  chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
-  ],
-  ssr: true,
-  wallets: [
-    { groupName: 'Suggest', wallets: [metaMaskWallet, phantomWallet, coinbaseWallet] },
-    { groupName: 'Others', wallets: [rainbowWallet, okxWallet, trustWallet, uniswapWallet] },
-  ],
-});
-
-const client = new QueryClient();
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { config, client } from '@core/config';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
