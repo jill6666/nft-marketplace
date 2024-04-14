@@ -32,11 +32,23 @@ const Home: NextPage = () => {
         <ConnectButton />
       </nav>
       <main className={styles.main}>
-        <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: '1fr 1fr 1fr 1fr', width: '100%' }}>
           {nfts.map((nft: any, idx) => (
-            <div key={nft?.identifier || idx}>
-              <img src={nft?.image_url} style={{ width: '100px', height: '100px' }} />
-              {nft?.name}
+            <div
+              key={nft?.identifier || idx}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '4px',
+                margin: 'auto',
+                cursor: 'pointer',
+                border: '1px solid #333',
+                borderRadius: '8px',
+                width: '100%',
+              }}
+            >
+              <img src={nft?.image_url} style={{ width: '100%', height: 'auto', maxWidth: '150px', margin: 'auto' }} />
+              <p style={{ width: '100%', textAlign: 'center' }}>{nft?.name}</p>
             </div>
           ))}
         </div>
