@@ -51,49 +51,15 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <nav className={styles.nav}>
-        <h1 className={styles.title}>OpenMeme</h1>
+        <h1 className={styles.title}>Rainbowkit Wallet</h1>
         <ConnectButton />
       </nav>
       <main className={styles.main}>
-        <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: '1fr 1fr 1fr 1fr', width: '100%' }}>
-          {nfts.map((nft: any, idx) => (
-            <div
-              onClick={() => handleOnClick(nft)}
-              key={nft?.identifier || idx}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '4px',
-                margin: 'auto',
-                cursor: 'pointer',
-                border: '1px solid #333',
-                borderRadius: '8px',
-                width: '100%',
-              }}
-            >
-              <img src={nft?.image_url} style={{ width: '100%', height: 'auto', maxWidth: '150px', margin: 'auto' }} />
-              <p style={{ width: '100%', textAlign: 'center' }}>{nft?.name}</p>
-            </div>
-          ))}
-        </div>
-        <Modal
-          title="Buy Details"
-          open={isModalOpen}
-          onOk={() => setIsModalOpen(false)}
-          onCancel={() => setIsModalOpen(false)}
-          okText="Buy"
-        >
-          <p>collection: {itemRef.current?.['collection']}</p>
-          <p>name: {itemRef.current?.['name']}</p>
-          <p>description: {itemRef.current?.['description']}</p>
-          <p>Your Balance: {balance.data?.formatted}</p>
-        </Modal>
+        
       </main>
 
       <footer className={styles.footer}>
-        <a href="https://github.com/jill6666/nft-marketplace" rel="noopener noreferrer" target="_blank">
-          Made with ❤️ by your frens at 🌈
-        </a>
+        Nice to meet you 🌈
       </footer>
     </div>
   );
