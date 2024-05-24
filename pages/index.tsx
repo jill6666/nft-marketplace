@@ -1,23 +1,46 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { Modal } from 'antd';
+import { useBalance, useAccount, useReadContracts } from 'wagmi';
+import abi from '@core/contractAbi.json';
+
+const wagmigotchiContract = {
+  address: '0xcb28749c24af4797808364d71d71539bc01e76d4',
+  abi,
+} as const;
 
 const Home: NextPage = () => {
+  const itemRef = useRef(null);
   const [next, setNext] = useState();
   const [nfts, setNfts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { address } = useAccount();
+  const balance = useBalance({ address, unit: 'ether' });
+  const { data, status, error } = useReadContracts({ contracts: [wagmigotchiContract] });
 
   useEffect(() => {
     init();
   }, []);
 
+  useEffect(() => {
+    console.log('data: ', { data, error });
+  }, [status]);
+
   const init = async () => {
     const slug = 'basedpunks';
-    const { data = {} } = await fetch(`/api/listed?slug=${slug}&next=${next}`).then(res => res.json());
-    console.log(`${slug}: `, data);
+    const res = await fetch(`/api/listed?slug=${slug}&next=${next}`).then(res => res.json());
+    const data = res;
+    console.log(`${slug}: `, res);
     setNext(data?.next);
     setNfts(data?.nfts || []);
+  };
+
+  const handleOnClick = (props: any) => {
+    itemRef.current = props;
+    setIsModalOpen(true);
   };
 
   return (
@@ -35,6 +58,7 @@ const Home: NextPage = () => {
         <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: '1fr 1fr 1fr 1fr', width: '100%' }}>
           {nfts.map((nft: any, idx) => (
             <div
+              onClick={() => handleOnClick(nft)}
               key={nft?.identifier || idx}
               style={{
                 display: 'flex',
@@ -52,6 +76,18 @@ const Home: NextPage = () => {
             </div>
           ))}
         </div>
+        <Modal
+          title="Buy Details"
+          open={isModalOpen}
+          onOk={() => setIsModalOpen(false)}
+          onCancel={() => setIsModalOpen(false)}
+          okText="Buy"
+        >
+          <p>collection: {itemRef.current?.['collection']}</p>
+          <p>name: {itemRef.current?.['name']}</p>
+          <p>description: {itemRef.current?.['description']}</p>
+          <p>Your Balance: {balance.data?.formatted}</p>
+        </Modal>
       </main>
 
       <footer className={styles.footer}>

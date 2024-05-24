@@ -2,13 +2,12 @@ import { QueryClient } from '@tanstack/react-query';
 import { arbitrum, base, mainnet, optimism, polygon, sepolia } from 'wagmi/chains';
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import {
-  phantomWallet,
-  coinbaseWallet,
   metaMaskWallet,
   rainbowWallet,
   okxWallet,
   trustWallet,
   uniswapWallet,
+  bybitWallet
 } from '@rainbow-me/rainbowkit/wallets';
 
 export const client = new QueryClient();
@@ -25,7 +24,7 @@ export const config = getDefaultConfig({
   ],
   ssr: true,
   wallets: [
-    { groupName: 'Suggest', wallets: [metaMaskWallet, phantomWallet, coinbaseWallet] },
+    { groupName: 'Suggest', wallets: [bybitWallet, metaMaskWallet] },
     { groupName: 'Others', wallets: [rainbowWallet, okxWallet, trustWallet, uniswapWallet] },
   ],
 });
